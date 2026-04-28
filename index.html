@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SUPER SIXES SPORTS ARENA</title>
+
+<style>
+body{
+font-family: Arial;
+background:#eef3ff;
+text-align:center;
+}
+.main-heading{
+font-size:40px;
+color:#ff4500;
+margin-top:20px;
+}
+.container{
+background:#ccffcc;
+width:850px;
+margin:auto;
+padding:20px;
+border-radius:10px;
+box-shadow:0px 0px 10px gray;
+}
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+th,td{
+border:1px solid gray;
+padding:8px;
+text-align:center;
+}
+input{
+padding:5px;
+width:80px;
+}
+button{
+padding:10px 20px;
+margin-top:15px;
+font-size:16px;
+background:#4CAF50;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+margin-right:10px;
+}
+.receipt{
+margin-top:20px;
+background:white;
+padding:15px;
+border-radius:10px;
+text-align:left;
+white-space:pre-line;
+font-family:monospace;
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="main-heading">SUPER SIXES SPORTS ARENA (SNPS)</h1>
+
+<div class="container">
+
+<label>Booking Name :</label>
+<input type="text" id="name" style="width:150px">
+
+<label>Slot Time :</label>
+<input type="text" id="slot" style="width:120px">
+
+<h3>Refreshment Drinks</h3>
+
+<table>
+<tr>
+<th>Drink</th>
+<th>Price</th>
+<th>Qty</th>
+<th>Prepaid Qty</th>
+</tr>
+
+<tr><td>Tata Gluco</td><td>10</td>
+<td><input type="number" id="gluco" value="0"></td>
+<td><input type="number" id="glucoPrepaid" value="0"></td></tr>
+
+<tr><td>Badam Milk</td><td>40</td>
+<td><input type="number" id="badam" value="0"></td>
+<td><input type="number" id="badamPrepaid" value="0"></td></tr>
+
+<tr><td>Red Bull</td><td>125</td>
+<td><input type="number" id="redbull" value="0"></td>
+<td><input type="number" id="redbullPrepaid" value="0"></td></tr>
+
+<tr><td>Hell</td><td>60</td>
+<td><input type="number" id="hell" value="0"></td>
+<td><input type="number" id="hellPrepaid" value="0"></td></tr>
+
+<tr><td>Water Bottle</td><td>20</td>
+<td><input type="number" id="water" value="0"></td>
+<td><input type="number" id="waterPrepaid" value="0"></td></tr>
+
+<tr><td>Elaichi Tea</td><td>20</td>
+<td><input type="number" id="tea" value="0"></td>
+<td><input type="number" id="teaPrepaid" value="0"></td></tr>
+
+<tr><td>Coffee</td><td>20</td>
+<td><input type="number" id="coffee" value="0"></td>
+<td><input type="number" id="coffeePrepaid" value="0"></td></tr>
+
+<tr><td>Hot Chocolate</td><td>30</td>
+<td><input type="number" id="choco" value="0"></td>
+<td><input type="number" id="chocoPrepaid" value="0"></td></tr>
+
+<tr><td>Lemon Tea</td><td>20</td>
+<td><input type="number" id="lemon" value="0"></td>
+<td><input type="number" id="lemonPrepaid" value="0"></td></tr>
+</table>
+
+<h3>Ground Fee</h3>
+
+<label>Ground Fee :</label>
+<input type="number" id="ground"><br><br>
+
+<label>Cash :</label>
+<input type="number" id="cash">
+
+<label>Online :</label>
+<input type="number" id="online"><br><br>
+
+<label>Advance :</label>
+<input type="number" id="advance"><br><br>
+
+<h3>Prepaid Payment</h3>
+
+<label>Prepaid Cash :</label>
+<input type="number" id="prepaidCash" value="0">
+
+<label>Prepaid Online :</label>
+<input type="number" id="prepaidOnline" value="0"><br><br>
+
+<button onclick="generateBill()">Generate Receipt</button>
+<button onclick="printReceipt()">Print Receipt</button>
+
+<div class="receipt" id="receipt"></div>
+
+</div>
+
+<script>
+
+function generateBill(){
+
+let drinks=[
+{name:"Tata Gluco",price:10,qty:document.getElementById("gluco").value,pre:document.getElementById("glucoPrepaid").value},
+{name:"Badam Milk",price:40,qty:document.getElementById("badam").value,pre:document.getElementById("badamPrepaid").value},
+{name:"Red Bull",price:125,qty:document.getElementById("redbull").value,pre:document.getElementById("redbullPrepaid").value},
+{name:"Hell",price:60,qty:document.getElementById("hell").value,pre:document.getElementById("hellPrepaid").value},
+{name:"Water Bottle",price:20,qty:document.getElementById("water").value,pre:document.getElementById("waterPrepaid").value},
+{name:"Elaichi Tea",price:20,qty:document.getElementById("tea").value,pre:document.getElementById("teaPrepaid").value},
+{name:"Coffee",price:20,qty:document.getElementById("coffee").value,pre:document.getElementById("coffeePrepaid").value},
+{name:"Hot Chocolate",price:30,qty:document.getElementById("choco").value,pre:document.getElementById("chocoPrepaid").value},
+{name:"Lemon Tea",price:20,qty:document.getElementById("lemon").value,pre:document.getElementById("lemonPrepaid").value}
+];
+
+let drinksTotal=0;
+let prepaidDrinkTotal=0;
+let drinkText="";
+let prepaidDrinkText="";
+
+drinks.forEach(d=>{
+
+let total=d.qty*d.price;
+let preTotal=d.pre*d.price;
+
+drinksTotal+=total;
+prepaidDrinkTotal+=preTotal;
+
+if(d.qty>0)
+drinkText+=d.name+" x"+d.qty+" = ₹"+total+"\n";
+
+if(d.pre>0)
+prepaidDrinkText+=d.name+" x"+d.pre+" = ₹"+preTotal+"\n";
+
+});
+
+let ground=parseInt(document.getElementById("ground").value)||0;
+let cash=parseInt(document.getElementById("cash").value)||0;
+let online=parseInt(document.getElementById("online").value)||0;
+let advance=parseInt(document.getElementById("advance").value)||0;
+
+let prepaidCash=parseInt(document.getElementById("prepaidCash").value)||0;
+let prepaidOnline=parseInt(document.getElementById("prepaidOnline").value)||0;
+
+let prepaidTotal=prepaidCash+prepaidOnline;
+
+let totalAmount=drinksTotal+ground;
+
+let totalPaid=cash+online+advance+prepaidTotal;
+
+let balance=totalAmount-totalPaid;
+
+if(balance<0) balance=0;
+
+let receipt="***** SUPER SIXES SPORTS ARENA *****\n\n";
+
+receipt+="Booking Name : "+document.getElementById("name").value+"\n";
+receipt+="Slot Time : "+document.getElementById("slot").value+"\n\n";
+
+receipt+="Drinks Bill\n"+drinkText+"\n";
+
+if(prepaidDrinkTotal>0){
+receipt+="Prepaid Drinks\n"+prepaidDrinkText+"\n";
+receipt+="Prepaid Drinks Total : ₹"+prepaidDrinkTotal+"\n\n";
+}
+
+receipt+="Ground Fee : ₹"+ground+"\n";
+receipt+="------------------------\n";
+receipt+="Total Amount : ₹"+totalAmount+"\n\n";
+
+receipt+="Advance : ₹"+advance+"\n";
+receipt+="Cash : ₹"+cash+"\n";
+receipt+="Online : ₹"+online+"\n";
+
+receipt+="Prepaid Cash : ₹"+prepaidCash+"\n";
+receipt+="Prepaid Online : ₹"+prepaidOnline+"\n";
+receipt+="Prepaid Total : ₹"+prepaidTotal+"\n";
+
+receipt+="------------------------\n";
+receipt+="Balance Amount : ₹"+balance+"\n\n";
+
+receipt+="Signature\nMD Sohail";
+
+document.getElementById("receipt").innerText=receipt;
+
+}
+
+function printReceipt(){
+
+let content=document.getElementById("receipt").innerText;
+
+let win=window.open("","","width=400,height=600");
+
+win.document.write("<pre style='font-family:monospace;font-size:16px'>"+content+"</pre>");
+
+win.document.close();
+
+win.print();
+
+}
+
+</script>
+
+</body>
+</html>
